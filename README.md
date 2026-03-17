@@ -1,4 +1,4 @@
-# Gemini Markdown Bold Fixer (Gemini 网页端加粗修复脚本)
+# Gemini 网页端Markdown格式修复脚本
 
 这是一个轻量级的浏览器油猴脚本（Tampermonkey Userscript），用于强制修复 Gemini 网页端在复杂文本语境下，Markdown 加粗语法（`**text**`）解析失效的官方 Bug。
 
