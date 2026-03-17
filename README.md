@@ -29,7 +29,6 @@ Gemini 官方前端的 Markdown 解析器在处理**词边界 (Word Boundary)** 
 **方法 Alpha：快捷安装（推荐）**
 1. 点击下方的安装链接：
     **[点击此处一键安装脚本](https://raw.githubusercontent.com/ShadowbanUser/gemini-markdown-fixer/main/gemini-md-fixer.user.js)**
-   *(注意：请确保上方链接中的用户名已修改为你真实的 GitHub 用户名)*
 2. 此时 Tampermonkey 会自动拦截并弹出一个安装界面。
 3. 点击界面左上角的 **“安装 (Install)”** 按钮即可完成。
 
