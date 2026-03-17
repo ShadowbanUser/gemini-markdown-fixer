@@ -1,6 +1,6 @@
-# Gemini 网页端Markdown格式修复脚本
+# Gemini Markdown Bold Fixer
 
-这是一个轻量级的浏览器油猴脚本（Tampermonkey Userscript），用于强制修复 Gemini 网页端在复杂文本语境下，Markdown 加粗语法（`**text**`）解析失效的官方 Bug。
+这是一个轻量级的浏览器油猴脚本（Tampermonkey Userscript），用于修复 Gemini Web (及 Google AI Studio) 网页端因边界解析漏洞导致 Markdown 加粗语法 (`**文字**`) 失效的问题。
 
 ## 发现问题
 
@@ -11,9 +11,22 @@ Gemini 官方前端的 Markdown 解析器在处理**词边界 (Word Boundary)** 
 *  `**"示例文本"**后续文字` -> 渲染出原生星号
 *  `**——示例文本**后续文字` -> 渲染出原生星号
 
-## 解决原理
+## 现版本 (v0.5) 实现原理
 
-本脚本通过 `MutationObserver` 动态监听 Gemini 聊天气泡的 DOM 树变化，并使用非贪婪的全局正则表达式 `/\*\*(.+?)\*\*/g`，绕过官方复杂的词边界判定，进行精准制导。无论星号内包裹何种特殊符号，也无论星号外紧贴何种字符，一律强制将其转换为原生 HTML 的 `<strong>` 加粗标签。
+为了在不破坏 Gemini 原有前端框架的前提下进行修复，本脚本采用了以下核心方案：
+
+1. **DOM 变动监听**：使用 `MutationObserver` 监听聊天内容的动态加载（兼容 SPA 单页应用的路由切换）。
+2. **纯文本节点提取**：使用 `TreeWalker` API 仅提取底层的 `TextNode`。直接跳过常规 HTML 标签，避免破坏底层数据驱动框架（如 React/Lit）绑定的 `data-path-to-node` 等状态追踪属性，防止触发 Virtual DOM 重绘回滚。
+3. **绕过 Trusted Types (CSP)**：Google 开启了严格的 CSP (内容安全策略)，拦截了所有的 `innerHTML` 赋值操作（报错 `TrustedHTML assignment`）。本脚本通过正则表达式 `/\*\*(.+?)\*\*/g` 分割文本，并使用原生的 `document.createTextNode` 和 `document.createElement('strong')` 重新拼接节点，安全绕过浏览器的 XSS 拦截机制。
+
+## 迭代纪要
+
+本项目在开发过程中经历了几个关键版本的迭代，解决了外部脚本介入复杂现代 Web 应用时的几个可能遇到的问题：
+
+* **v0.1 - v0.2 (正则扩容)**：初版仅针对英文双引号进行替换。后续测试发现单引号、书名号等均会触发 Bug，且容易引发跨行的贪婪匹配。最终将正则升级为非贪婪的通杀模式 `/\*\*(.+?)\*\*/g`。
+* **v0.3 (Virtual DOM 冲突)**：早期尝试通过 `innerHTML` 直接替换父级节点的 HTML。这导致了官方框架绑定的 `data-*` 属性丢失，被前端框架的反篡改机制瞬间回滚（替换后立刻恢复原状）。后改用 `TreeWalker` 操作纯文本节点。
+* **v0.4 (SPA 路由与多环境)**：追加了对 `https://aistudio.google.com/*` 的支持。由于目标站点是单页应用 (SPA)，常规的页面加载注入容易失效，调整了注入时机和监听策略。
+* **v0.5 (突破 CSP 限制)**：遭遇 Google 严格的 Trusted Types 拦截。废弃了所有字符串拼接 HTML 的做法，全面重构为原生 DOM API 构建节点，彻底解决 `This document requires 'TrustedHTML' assignment` 报错。
 
 ## 安装与使用教程
 
