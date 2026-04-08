@@ -33,6 +33,7 @@ Gemini 官方前端的 Markdown 解析引擎在处理词边界 (Word Boundary) �
 如果你还没有安装油猴插件，请先为你的浏览器安装 **Tampermonkey** 扩展：
 * **Edge 浏览器用户**：请前往 [Edge 外接程序商店](https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd) 获取。
 * **Chrome 浏览器用户**：请前往 [Chrome 网上应用店](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) 获取。
+* **Firefox 浏览器用户**：请前往 [Firefox 附加组件商店](https://addons.mozilla.org/firefox/addon/tampermonkey/) 获取。
 * 安装完成后，你的浏览器右上角插件栏会出现一个带有两个圆孔的黑色图标。
 
 ### 第二步：安装本修复脚本
