@@ -25,6 +25,7 @@ Gemini 官方前端的 Markdown 解析引擎在处理词边界 (Word Boundary) �
 * **v0.5 (突破 CSP 限制)**：遭遇 Google 严格的 Trusted Types 拦截。废弃了所有字符串拼接 HTML 的做法，全面重构为原生 DOM API 构建节点，彻底解决 `This document requires 'TrustedHTML' assignment` 报错。
 * **v0.6 (DOM 碎裂与状态机重构)**：遇到多段相邻加粗（如 `**“词A”**与**“词B”**`）同时翻车的极端 Case。排查 F12 发现死因并非换行符，而是官方解析逻辑崩溃，导致文本在物理节点上被错误切断，使 v0.5 的正则引擎“跨节点致盲”。果断放弃正则匹配，引入编译原理中的状态机模型，基于上下文记忆强行接管渲染逻辑，最终解决对各种乱序排版和错误标签的根本问题。
 * **v0.6.1**：追加了对ChatGPT和Claude的支持。
+* **v0.6.2**：追加了对NotebookLM的支持。
 
 ## 安装与使用教程
 
