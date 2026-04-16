@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Gemini Markdown Bold Fixer
 // @namespace    http://tampermonkey.net/
-// @version      0.6.1
+// @version      0.6.2
 // @description  Bypass cross-node fragmentation caused by official parser using a State Machine.
 // @author       ShadowbanUser
 // @match        https://gemini.google.com/*
