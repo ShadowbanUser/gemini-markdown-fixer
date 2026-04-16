@@ -6,6 +6,7 @@
 // @author       ShadowbanUser
 // @match        https://gemini.google.com/*
 // @match        https://aistudio.google.com/*
+// @match        https://notebooklm.google.com/*
 // @match        https://chat.openai.com/*
 // @match        https://chatgpt.com/*
 // @match        https://claude.ai/*
